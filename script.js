@@ -168,15 +168,23 @@ checkoutBtn.addEventListener('click', function(){
     //Enviar o pedido para API WhatsApp
 
     const cartItems = cart.map((item) => {
+
+        let total = 0;
+        total += item.price * item.quantity;
+
         return(
+            
             `Lanche: ${item.name}, Quantidade: (${item.quantity}) Preço: R$${item.price} | `
         )
+
+        
     }).join("");
 
+    
     const message = encodeURIComponent(cartItems);
     const phone = "19997939514";
 
-    window.open(`https://wa.me/${phone}?text=${message} Endereço: ${addressInput.value}`, "_blank")
+    window.open(`https://wa.me/${phone}?text=${message} Endereço: ${addressInput.value} `, "_blank")
 
 })
 
