@@ -107,22 +107,22 @@ function updateCartModal() {
 
 
 //Função para remover o item do carrinho
-cartItemsContainer.addEventListener('click', function(event){
-    if(event.target.classList.contains('remove-from-cart-btn')){
+cartItemsContainer.addEventListener('click', function (event) {
+    if (event.target.classList.contains('remove-from-cart-btn')) {
         const name = event.target.getAttribute('data-name');
-        
+
         removeItemCart(name);
     }
 
 })
 
-function removeItemCart(name){
+function removeItemCart(name) {
     const index = cart.findIndex(item => item.name === name);
 
-    if(index !== -1){
+    if (index !== -1) {
         const item = cart[index];
-        
-        if(item.quantity > 1){
+
+        if (item.quantity > 1) {
             item.quantity -= 1;
             updateCartModal();
             return;
@@ -133,32 +133,32 @@ function removeItemCart(name){
     }
 }
 
-addressInput.addEventListener('input', function(event){
+addressInput.addEventListener('input', function (event) {
     let inputValue = event.target.value;
 
-    if(inputValue !== ""){
+    if (inputValue !== "") {
         addressInput.classList.remove('border-red-500');
         addressWarn.classList.add('hidden');
-        
+
     }
 })
 
 
 //Finalizar pedido
-checkoutBtn.addEventListener('click', function(){
-    
-    
-    
+checkoutBtn.addEventListener('click', function () {
+
+
+
     const isOpen = checkRestauranteOpen();
-    if(!isOpen){
+    if (!isOpen) {
         alert("RESTAURANTE FECHADO NO MOMENTO!");
         return;
     }
-    
 
-    if(cart.length === 0)return;
 
-    if(addressInput.value === ""){
+    if (cart.length === 0) return;
+
+    if (addressInput.value === "") {
         addressWarn.classList.remove("hidden");
         addressInput.classList.add('border-red-500');
         return;
@@ -169,18 +169,23 @@ checkoutBtn.addEventListener('click', function(){
 
     const cartItems = cart.map((item) => {
 
-        let total = 0;
-        total += item.price * item.quantity;
 
-        return(
-            
+
+        return (
+
             `Lanche: ${item.name}, Quantidade: (${item.quantity}) Preço: R$${item.price} | `
         )
 
-        
+
     }).join("");
 
-    
+    /**
+     *
+     * let total = 0;
+        total += cartItems.price * item.quantity; 
+     */
+    console.log(cartItems);
+
     const message = encodeURIComponent(cartItems);
     const phone = "19997939514";
 
@@ -190,20 +195,20 @@ checkoutBtn.addEventListener('click', function(){
 
 
 //Verificar a hora e manipular o card do horário
-function checkRestauranteOpen(){
-    const data  =  new Date();
-    const hora  = data.getHours();
-    return hora >= 18 && hora < 23; 
+function checkRestauranteOpen() {
+    const data = new Date();
+    const hora = data.getHours();
+    return hora >= 18 && hora < 23;
     //true = restaurante aberto
 }
 
 const spanItem = document.getElementById('date-span');
 const isOpen = checkRestauranteOpen();
 
-if(isOpen){
+if (isOpen) {
     spanItem.classList.remove('bg-red-500');
     spanItem.classList.add('bg-green-600');
-}else{
+} else {
     spanItem.classList.remove('bg-green-600');
     spanItem.classList.add('bg-red-500');
 }
